@@ -1,4 +1,5 @@
-{
+[
+  {
     "name": "Chichigneux Christmas Chess Tournament",
     "dates": {
         "from": "21-12-2022",
@@ -157,4 +158,5 @@
             }
         ]
     ]
-}
+  }
+]
