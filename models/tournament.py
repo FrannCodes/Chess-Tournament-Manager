@@ -27,13 +27,19 @@ class Tournament:
         # Saves JSON file everytime a change is made
 
         with open(self.filepath_tournament, "w") as fp:
-            json.dump(self.tournaments_list)
+            json.dump(self.tournaments_list, fp)
 
-    def create_tournament (self, name, **kwargs):
+    def create_tournament(self, name, **kwargs):
         # Creates a new tournament
 
         tournament = TournamentATTR(name = name, **kwargs)
         self.tournaments_list.append(tournament.return_attributes())
+        self.save()
+
+    def remove_tournament(self, name):
+        for tournament in self.tournaments_list:
+            if tournament["name"] == name:
+                self.tournaments_list.remove(tournament)
         self.save()
 
     def register_player (self, player_num, tournament_name, filepath_club):
@@ -54,7 +60,6 @@ class Tournament:
                 for tournament in self.tournaments_list:
                     if tournament["name"] == tournament_name:
                         tournament["players"].append(player_num)
-
 
         except FileNotFoundError:
             print ("File not Found")
