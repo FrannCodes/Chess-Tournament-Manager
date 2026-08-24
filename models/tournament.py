@@ -47,6 +47,8 @@ class Tournament:
     def register_player (self, player_num, tournament_name, filepath_club):
         # Registers a player for the tournament using already defined players in a club
 
+        player_list = []
+
         try:
             players = []
 
@@ -62,6 +64,7 @@ class Tournament:
                 for tournament in self.tournaments_list:
                     if tournament["name"] == tournament_name:
                         tournament["players"].append(player_num)
+                        player_list = tournament["players"]
 
         except FileNotFoundError:
             print ("File not Found")
@@ -70,6 +73,8 @@ class Tournament:
             print(e)
 
         self.save()
+
+        return player_list
 
     def results (self, tournament_name):
         # Returns the results of the tournaments
@@ -84,15 +89,25 @@ class Tournament:
     def advance (self, tournament_name):
         # Advances tournament to the next round
 
+        number_of_rounds = 1
+        current_round = 1
+
+
         for tournament in self.tournaments_list:
             if tournament["name"] == tournament_name:
-                if tournament["number_of_rounds"] > tournament["current_round"]:
-                    tournament["current_round"] += 1
 
-                else:
-                    raise ValueError("Tournament cannot advance past the final round")
+                number_of_rounds = tournament["number_of_rounds"]
+                current_round = tournament["current_round"]
+
+                if number_of_rounds > current_round:
+                    tournament["current_round"] += 1
+                    current_round = tournament["current_round"]
+
+                elif number_of_rounds == current_round:
+                    current_round += 1
 
         self.save()
+        return current_round, number_of_rounds
 
     def report (self, tournament_name):
         # Returns report of the tournament
