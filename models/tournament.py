@@ -3,7 +3,7 @@ from .tournament_attr import TournamentATTR
 
 class Tournament:
     def __init__(self, filepath_tournament):
-        # An instance of Tournament class will create a dictionary of each tournament
+        # An instance of Tournament class will create a list of tournaments which each of them are dictionaries
 
         self.filepath_tournament = filepath_tournament
         self.tournaments_list = []
@@ -35,6 +35,8 @@ class Tournament:
         tournament = TournamentATTR(name = name, **kwargs)
         self.tournaments_list.append(tournament.return_attributes())
         self.save()
+
+        return tournament.return_attributes()
 
     def remove_tournament(self, name):
         for tournament in self.tournaments_list:
@@ -71,6 +73,7 @@ class Tournament:
 
     def results (self, tournament_name):
         # Returns the results of the tournaments
+        results = []
 
         for tournament in self.tournaments_list:
             if tournament["name"] == tournament_name:
