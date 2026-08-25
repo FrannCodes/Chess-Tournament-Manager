@@ -19,5 +19,7 @@ class Advance(BaseCommand):
 
         if advance[0] > advance[1]:
             tm.completed(self.tournament)
+        else:
+            tm.matchmaking(self.tournament)
 
         return Context("advance-view", prompt = None)
