@@ -128,16 +128,7 @@ class Tournament:
         report = {}
         for tournament in self.tournaments_list:
             if tournament["name"] == tournament_name:
-                report = {
-                    "name": tournament["name"],
-                    "dates": tournament["dates"],
-                    "venue": tournament["venue"],
-                    "number_of_rounds": tournament["number_of_rounds"],
-                    "current_round": tournament["current_round"],
-                    "completed": tournament["completed"],
-                    "players": tournament["players"],
-                    "rounds": tournament["rounds"]
-                }
+                report = tournament
         return report
 
     def return_rounds(self, tournament_name):
@@ -147,18 +138,20 @@ class Tournament:
 
         for tournament in self.tournaments_list:
             if tournament["name"] == tournament_name:
-                for r in tournament["rounds"]:
-                    rounds_section = []
-                    for i in r:
-                        rounds_info = {
-                            "players": i["players"],
-                            "completed": i["completed"],
-                            "winner": i["winner"]
-                        }
-                        rounds_section.append(rounds_info)
-                    rounds.append(rounds_section)
+                rounds = tournament["rounds"]
 
         return rounds
+
+    def return_players(self, tournament_name):
+        # Returns the players in a round
+
+        players = []
+
+        for tournament in self.tournaments_list:
+            if tournament["name"] == tournament_name:
+                players = tournament["players"]
+
+        return players
 
     def add_round(self, tournament_name, matches):
         # Adds a round
