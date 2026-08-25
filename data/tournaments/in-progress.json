@@ -76,7 +76,8 @@
                     "OH36083",
                     "XW31336"
                 ],
-                "completed": false
+                "completed": false,
+                "winner": null
             },
             {
                 "players": [

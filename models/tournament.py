@@ -76,9 +76,22 @@ class Tournament:
 
         return player_list
 
-    def results (self, tournament_name):
-        # Returns the results of the tournaments
+    def results (self, tournament_name, winners):
+        # Submits the results of the tournament
+
         results = []
+
+        for tournament in self.tournaments_list:
+            if tournament["name"] == tournament_name:
+                for match, winner in zip(tournament["rounds"][-1], winners):
+                    match["winner"] = winner
+
+                    if match["winner"] not in  match["players"] and match["winner"] is not None:
+                        raise ValueError("Winner must be one of the players in the match or a tie")
+                    else:
+                        match ["completed"] = True
+
+        self.save()
 
         for tournament in self.tournaments_list:
             if tournament["name"] == tournament_name:
@@ -126,3 +139,31 @@ class Tournament:
                     "rounds": tournament["rounds"]
                 }
         return report
+
+    def return_rounds(self, tournament_name):
+        # Returns the rounds
+
+        rounds = []
+
+        for tournament in self.tournaments_list:
+            if tournament["name"] == tournament_name:
+                for r in tournament["rounds"]:
+                    rounds_section = []
+                    for i in r:
+                        rounds_info = {
+                            "players": i["players"],
+                            "completed": i["completed"],
+                            "winner": i["winner"]
+                        }
+                        rounds_section.append(rounds_info)
+                    rounds.append(rounds_section)
+
+        return rounds
+
+    def add_round(self, tournament_name, matches):
+        # Adds a round
+
+        for tournament in self.tournaments_list:
+            if tournament["name"] == tournament_name:
+                tournament["rounds"].append(matches)
+        self.save()
