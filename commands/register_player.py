@@ -3,7 +3,7 @@ from .base import BaseCommand
 from models.tournament import Tournament
 
 
-class RegisterPlayer(BaseCommand):
+class RegisterPlayerCmd(BaseCommand):
     # Command to register a player
 
     def __init__(self,chess_id, tournament, club):

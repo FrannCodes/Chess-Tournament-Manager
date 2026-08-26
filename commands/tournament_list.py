@@ -2,7 +2,7 @@ from commands.context import Context
 from models.tournament_manager import TournamentManager
 from .base import BaseCommand
 
-class TournamentList(BaseCommand):
+class TournamentListCmd(BaseCommand):
     # Command to create a tournament
 
     def execute(self):

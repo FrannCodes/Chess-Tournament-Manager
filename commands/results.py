@@ -2,7 +2,7 @@ from commands.context import Context
 from .base import BaseCommand
 from models.tournament import Tournament
 
-class Results(BaseCommand):
+class ResultsCmd(BaseCommand):
     # Command to input results
 
     def __init__(self, tournament):

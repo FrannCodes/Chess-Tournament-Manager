@@ -2,7 +2,7 @@ from commands.context import Context
 from models.tournament import Tournament
 from .base import BaseCommand
 
-class CreateTournament(BaseCommand):
+class CreateTournamentCmd(BaseCommand):
     # Command to create a tournament
     def __init__(self, **kwargs):
         self.kwargs = kwargs

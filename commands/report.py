@@ -3,7 +3,7 @@ from .base import BaseCommand
 from models.tournament import Tournament
 
 
-class Report(BaseCommand):
+class ReportCmd(BaseCommand):
     # Command to show tournament report
 
     def __init__(self, tournament, file):

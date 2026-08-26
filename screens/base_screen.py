@@ -34,6 +34,20 @@ class BaseScreen(ABC):
             if empty and value:
                 return value
 
+    def input_rounds(self, prompt="Enter the number of Rounds", default = "1", empty=False):
+        # Method for inputting the number of rounds
+
+        rounds = None
+        digit = False
+
+        while not digit:
+            rounds = self.input_string(prompt, default, empty)
+
+            if rounds.isdigit() and int(rounds) > 0:
+                digit = True
+
+        return int(rounds)
+
     def input_email(self, **kwargs):
         """Utility function to get an email address"""
 
@@ -68,6 +82,23 @@ class BaseScreen(ABC):
                 return value
             except ValueError:
                 print("Please provide a valid date (dd-mm-yyyy)!")
+
+    def input_dates(self, empty = True):
+        # Method that returns a dictionary of dates
+
+        dates = {}
+        while True:
+            dates["from"] = self.input_string("From", empty = empty)
+            dates["to"] = self.input_string("To", empty = empty)
+            try:
+                dt_from = datetime.strptime(dates["from"], "%d-%m-%Y")
+                dt_to = datetime.strptime(dates["to"], "%d-%m-%Y")
+                if dt_from > dt_to:
+                    raise ValueError
+                return dates
+            except ValueError:
+                print("Please provide a valid date (dd-mm-yyyy)!")
+
 
     def run(self):
         """Main method to 'run' the screen - displays a message and gets a command"""

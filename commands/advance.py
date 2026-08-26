@@ -4,7 +4,7 @@ from models.tournament import Tournament
 from models.tournament_manager import TournamentManager
 
 
-class Advance(BaseCommand):
+class AdvanceCmd(BaseCommand):
     # Command to advance a round
 
     def __init__(self, tournament):

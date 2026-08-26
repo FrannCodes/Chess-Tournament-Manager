@@ -7,14 +7,14 @@ class TournamentATTR:
     DATE_FORMAT = "%d-%m-%Y"
 
     def __init__(self, name, dates, venue, number_of_rounds = 1,
-                 current_round = 1, players = None, rounds = None):
+                 current_round = 1, completed = False, players = None, rounds = None):
 
         self.name = name
         self.dates = dates
         self.venue = venue
         self.number_of_rounds = number_of_rounds
         self.current_round = current_round
-        self.completed = False
+        self.completed = completed
         self.players = players
         self.finished = False
         self.rounds = rounds
