@@ -2,6 +2,7 @@ import json
 import random
 from pathlib import Path
 from .tournament import Tournament
+from datetime import datetime
 
 class TournamentManager:
     def __init__(self, data_folder = "data/tournaments"):
@@ -20,6 +21,11 @@ class TournamentManager:
 
                 except json.JSONDecodeError:
                     print(filepath, "is an invalid JSON file.")
+
+        self.tournaments.sort(
+            key=lambda x: datetime.strptime(x["dates"]["from"], "%d-%m-%Y")
+        )
+
 
     def completed(self, name):
         #Moves completed tournaments from "in-progress.json" to "completed.json" file when marked as completed
@@ -51,6 +57,10 @@ class TournamentManager:
 
                 except json.JSONDecodeError:
                     print(filepath, "is an invalid JSON file.")
+
+        self.tournaments.sort(
+            key=lambda x: datetime.strptime(x["dates"]["from"], "%d-%m-%Y")
+        )
 
     def get_scores(self, name):
         tournament = Tournament("data/tournaments/in-progress.json")
