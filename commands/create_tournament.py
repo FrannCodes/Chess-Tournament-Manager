@@ -9,8 +9,8 @@ class CreateTournamentCmd(BaseCommand):
 
     def execute(self, **kwargs):
         # Uses a Tournament instance to create a tournament and add it to the list of created tournaments
-        t = Tournament("data/tournaments/in-progress")
-        tournament = t.create_tournament(**self.kwargs)
+        t = Tournament("data/tournaments/in-progress.json")
+        t.create_tournament(**self.kwargs)
 
         tm = TournamentManager()
         tournament_details = {}

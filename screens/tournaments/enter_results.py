@@ -3,7 +3,7 @@ from ..base_screen import BaseScreen
 
 class EnterResults(BaseScreen):
 
-    display = "## Enter Results"
+    display = "- Enter Results -"
 
     def __init__(self, tournament):
         self.tournament = tournament
@@ -13,8 +13,8 @@ class EnterResults(BaseScreen):
         winners = []
 
         for i, match in enumerate(self.tournament["rounds"][-1], 1):
-            print("1.) ", match["players"][0])
-            print("2.) ", match["players"][1])
+            print("1.)", match["players"][0])
+            print("2.)", match["players"][1])
             print("3.) TIE")
 
             winner = 0
@@ -27,4 +27,4 @@ class EnterResults(BaseScreen):
                 case 2: winners.append(match["players"][1])
                 case 3: winners.append(None)
 
-        return ResultsCmd(self.tournament["name"], winners)
+        return ResultsCmd(tournament = self.tournament["name"], winners = winners)
