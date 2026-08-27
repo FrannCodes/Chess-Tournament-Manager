@@ -8,6 +8,6 @@ class TournamentListCmd(BaseCommand):
     def execute(self):
         # Command to get a list of tournaments
 
-        t = TournamentManager()
+        tm = TournamentManager()
 
-        return Context("main-menu", tournaments = t.tournaments)
+        return Context("main-menu", tournaments = tm.tournaments)

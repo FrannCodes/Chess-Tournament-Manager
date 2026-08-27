@@ -1,0 +1,10 @@
+from commands.register_player import RegisterPlayerCmd
+from ..base_screen import BaseScreen
+
+class RegisterPlayers:
+    display = "## Register Player"
+
+    def get_command(self):
+        print("Enter player name or Chess ID")
+
+        #players = RegisterPlayerCmd(tournament["name"])

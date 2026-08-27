@@ -1,6 +1,6 @@
 from commands.context import Context
 from .base import BaseCommand
-from models.tournament import Tournament
+from models import Tournament, TournamentManager
 
 
 class RegisterPlayerCmd(BaseCommand):
@@ -17,4 +17,10 @@ class RegisterPlayerCmd(BaseCommand):
         t = Tournament("data/tournaments/in-progress.json")
         players = t.register_player(self.chess_id, self.tournament, self.club)
 
-        return Context("register-player-view", tournament = self.tournament, players = players)
+        tm = TournamentManager()
+        tournament_details = {}
+        for t in tm.tournaments:
+            if t["name"] == self.tournament:
+                tournament_details = t
+
+        return Context("tournament-view", tournament = tournament_details)

@@ -9,40 +9,10 @@ class TournamentManager:
         datadir = Path(data_folder)
         self.data_folder = datadir
         self.tournaments = []
+        self.refresh()
 
-        for filepath in datadir.iterdir():
-            if filepath.is_file() and filepath.suffix == ".json":
-                try:
-                    with open(filepath) as fp:
-                        # Appends all tournaments from both completed and in-progress files to the same list
-                        data = json.load(fp)
-                        for tournament in data:
-                            self.tournaments.append(tournament)
-
-                except json.JSONDecodeError:
-                    print(filepath, "is an invalid JSON file.")
-
-        self.tournaments.sort(
-            key=lambda x: datetime.strptime(x["dates"]["from"], "%d-%m-%Y")
-        )
-
-
-    def completed(self, name):
-        #Moves completed tournaments from "in-progress.json" to "completed.json" file when marked as completed
+    def refresh(self):
         list_tournaments = []
-
-        for t in self.tournaments:
-            if t["name"] == name:
-                in_progress = Tournament("data/tournaments/in-progress.json")
-                completed = Tournament("data/tournaments/completed.json")
-
-                for i in in_progress.tournaments_list:
-                    if i["name"] == name:
-                        in_progress.remove_tournament(name)
-                        completed.create_tournament(name, dates = i["dates"], venue = i["venue"],
-                                                    number_of_rounds = i["number_of_rounds"],
-                                                    current_round = i["current_round"],
-                                                    players = i["players"], rounds = i["rounds"])
 
         for filepath in self.data_folder.iterdir():
             if filepath.is_file() and filepath.suffix == ".json":
@@ -59,8 +29,26 @@ class TournamentManager:
                     print(filepath, "is an invalid JSON file.")
 
         self.tournaments.sort(
-            key=lambda x: datetime.strptime(x["dates"]["from"], "%d-%m-%Y")
+            key = lambda x: datetime.strptime(x["dates"]["from"], "%d-%m-%Y")
         )
+
+    def completed(self, name):
+        #Moves completed tournaments from "in-progress.json" to "completed.json" file when marked as completed
+
+        for t in self.tournaments:
+            if t["name"] == name:
+                in_progress = Tournament("data/tournaments/in-progress.json")
+                completed = Tournament("data/tournaments/completed.json")
+
+                for i in in_progress.tournaments_list:
+                    if i["name"] == name:
+                        in_progress.remove_tournament(name)
+                        completed.create_tournament(name, dates = i["dates"], venue = i["venue"],
+                                                    number_of_rounds = i["number_of_rounds"],
+                                                    current_round = None, completed = True,
+                                                    players = i["players"], rounds = i["rounds"])
+
+        self.refresh()
 
     def get_scores(self, name):
         tournament = Tournament("data/tournaments/in-progress.json")
@@ -156,3 +144,5 @@ class TournamentManager:
                 matches.append(pairs)
 
             tournament.add_round(name, matches)
+
+        self.refresh()

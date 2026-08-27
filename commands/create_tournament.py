@@ -1,5 +1,5 @@
 from commands.context import Context
-from models.tournament import Tournament
+from models import Tournament, TournamentManager
 from .base import BaseCommand
 
 class CreateTournamentCmd(BaseCommand):
@@ -12,4 +12,10 @@ class CreateTournamentCmd(BaseCommand):
         t = Tournament("data/tournaments/in-progress")
         tournament = t.create_tournament(**self.kwargs)
 
-        return Context("tournament-view", tournament = tournament)
+        tm = TournamentManager()
+        tournament_details = {}
+        for t in tm.tournaments:
+            if t["name"] == self.kwargs["name"]:
+                tournament_details = t
+
+        return Context("tournament-view", tournament = tournament_details)

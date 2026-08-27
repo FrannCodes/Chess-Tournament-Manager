@@ -1,6 +1,8 @@
 import re
 from abc import ABC, abstractmethod
 from datetime import datetime
+from pathlib import Path
+import json
 
 
 class BaseScreen(ABC):
@@ -33,6 +35,18 @@ class BaseScreen(ABC):
                 return value
             if empty and value:
                 return value
+
+    def input_digit(self, prompt="", default=None, empty=False):
+        number = None
+        digit = False
+
+        while not digit:
+            number = self.input_string(prompt, default, empty)
+
+            if number.isdigit():
+                digit = True
+
+        return int(number)
 
     def input_rounds(self, prompt="Enter the number of Rounds", default = "1", empty=False):
         # Method for inputting the number of rounds
@@ -70,6 +84,36 @@ class BaseScreen(ABC):
         chess_rgxp = r"[A-Z]{2}[0-9]{5}"
         message = "Please provide a valid Chess ID (XXNNNNN)!"
         return self.input_regexp(chess_rgxp, message, **kwargs)
+
+    def input_club(self, **kwargs):
+        name = None
+        datadir = Path("data/clubs")
+        valid_club = False
+        clubs = []
+
+        for filepath in datadir.iterdir():
+            if filepath.is_file() and filepath.suffix == ".json":
+                with open(filepath) as fp:
+                    data = json.load(fp)
+                    clubs.append(data["name"])
+
+        while not valid_club:
+            club_name = self.input_digit(empty=True)
+            if club_name in clubs:
+                valid_club = True
+
+        return name
+
+    def input_player_id(self, club_players, **kwargs):
+        in_club = False
+        while not in_club:
+            chess_id = self.input_chess_id(prompt = "Chess ID")
+            if chess_id in club_players:
+                in_club = True
+
+        return chess_id
+
+
 
     def input_birthday(self, **kwargs):
         """Utility function to get a date string"""
@@ -112,3 +156,4 @@ class BaseScreen(ABC):
 
         print("")
         return self.get_command()
+

@@ -3,7 +3,6 @@ from .base import BaseCommand
 from models.tournament import Tournament
 from models.tournament_manager import TournamentManager
 
-
 class AdvanceCmd(BaseCommand):
     # Command to advance a round
 
@@ -13,13 +12,18 @@ class AdvanceCmd(BaseCommand):
     def execute(self):
 
         t = Tournament("data/tournaments/in-progress.json")
-        tm = TournamentManager()
-
         advance = t.advance(self.tournament)
+
+        tm = TournamentManager()
 
         if advance[0] > advance[1]:
             tm.completed(self.tournament)
         else:
             tm.matchmaking(self.tournament)
 
-        return Context("advance-view", prompt = None)
+        tournament_details = {}
+        for t in tm.tournaments:
+            if t["name"] == self.tournament:
+                tournament_details = t
+
+        return Context("tournament-view", tournament = tournament_details)

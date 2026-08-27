@@ -39,6 +39,6 @@ class MainMenu(BaseScreen):
                     if value in range(1, len(self.tournaments) + 1):
                         return NoopCmd("tournament-view", tournament = self.tournaments[value - 1])
                 elif value.upper() == "C":
-                    return NoopCmd("create-tournament")
+                    return NoopCmd("create-tournament", tournament = self.tournaments[value - 1])
                 elif value.upper() == "X":
                     return ExitCmd()
