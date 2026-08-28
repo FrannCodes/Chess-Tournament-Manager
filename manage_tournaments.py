@@ -1,6 +1,6 @@
 from commands import TournamentListCmd
 from screens.main_menu_tournaments import MainMenu
-from screens.tournaments import Advance, EnterResults, RegisterPlayers, TournamentReport, TournamentView, TournamentCreate
+from screens.tournaments import Advance, CreateRound, EnterResults, RegisterPlayers, TournamentReport, TournamentView, TournamentCreate
 
 
 class TournamentApp:
@@ -8,11 +8,12 @@ class TournamentApp:
 
     SCREENS = {
         "main-menu": MainMenu,
-        "tournament-create": TournamentCreate,
+        "create-tournament": TournamentCreate,
         "tournament-view": TournamentView,
         "register-player-view": RegisterPlayers,
         "tournament-report-view": TournamentReport,
         "advance-view": Advance,
+        "create-round-view": CreateRound,
         "results-view": EnterResults,
         "exit": False,
     }

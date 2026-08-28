@@ -9,13 +9,15 @@ class CreateTournamentCmd(BaseCommand):
 
     def execute(self, **kwargs):
         # Uses a Tournament instance to create a tournament and add it to the list of created tournaments
-        t = Tournament("data/tournaments/in-progress.json")
+        t = Tournament("data/tournaments/in-progress")
+        name = kwargs["name"]
+
         t.create_tournament(**self.kwargs)
 
         tm = TournamentManager()
         tournament_details = {}
         for t in tm.tournaments:
-            if t["name"] == self.kwargs["name"]:
+            if t["name"] == name:
                 tournament_details = t
 
         return Context("tournament-view", tournament = tournament_details)

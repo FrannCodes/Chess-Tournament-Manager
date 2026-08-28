@@ -86,10 +86,9 @@ class BaseScreen(ABC):
         return self.input_regexp(chess_rgxp, message, **kwargs)
 
     def input_club(self, **kwargs):
-        name = None
         datadir = Path("data/clubs")
-        valid_club = False
         clubs = []
+        number = []
 
         for filepath in datadir.iterdir():
             if filepath.is_file() and filepath.suffix == ".json":
@@ -97,23 +96,34 @@ class BaseScreen(ABC):
                     data = json.load(fp)
                     clubs.append(data["name"])
 
-        while not valid_club:
-            club_name = self.input_digit(empty=True)
-            if club_name in clubs:
-                valid_club = True
+        for count, _ in enumerate(clubs, 1):
+            number.append(count)
 
-        return name
-
-    def input_player_id(self, club_players, **kwargs):
-        in_club = False
-        while not in_club:
-            chess_id = self.input_chess_id(prompt = "Chess ID")
-            if chess_id in club_players:
-                in_club = True
-
-        return chess_id
+        while True:
+            club_name = self.input_digit(prompt = "Which club you would like to register a player from", empty=True)
+            if club_name in number:
+                name = clubs[club_name - 1]
+                return name
 
 
+
+    def input_player(self, club_name, **kwargs):
+        datadir = Path("data/clubs")
+        players = []
+
+        for filepath in datadir.iterdir():
+            if filepath.is_file() and filepath.suffix == ".json":
+                with open(filepath) as fp:
+                    data = json.load(fp)
+                    if data["name"] == club_name:
+                        for player in data["players"]:
+                            players.append((player["name"], player["chess_id"]))
+
+        while True:
+            name = self.input_string(prompt = "Enter player name or chess ID", empty=True)
+            for player, chess_id in players:
+                if name.lower() in player.lower() or name == chess_id:
+                    return chess_id
 
     def input_birthday(self, **kwargs):
         """Utility function to get a date string"""

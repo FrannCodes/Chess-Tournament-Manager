@@ -12,7 +12,7 @@ class MainMenu(BaseScreen):
 
     def display(self):
         # Displays list of both completed and in-progress tournaments
-        print("## Completed and In-progress Tournaments")
+        print("Completed and In-progress Tournaments")
         for count, tournament in enumerate(self.tournaments, 1):
             print(count, tournament["name"])
 
@@ -39,6 +39,6 @@ class MainMenu(BaseScreen):
                     if value in range(1, len(self.tournaments) + 1):
                         return NoopCmd("tournament-view", tournament = self.tournaments[value - 1])
                 elif value.upper() == "C":
-                    return NoopCmd("create-tournament", tournament = self.tournaments[value - 1])
+                    return NoopCmd("create-tournament")
                 elif value.upper() == "X":
                     return ExitCmd()

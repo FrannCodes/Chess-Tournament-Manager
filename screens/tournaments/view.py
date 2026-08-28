@@ -72,7 +72,7 @@ class TournamentView(BaseScreen):
                     if action.upper() == "P":
                         return NoopCmd("register-player-view", tournament = self.tournament)
                     elif action.upper() == "C":
-                        return NoopCmd("tournament-create", tournament = self.tournament)
+                        return NoopCmd("create-round-view", tournament = self.tournament)
                     elif action.upper() == "V":
                         return NoopCmd("tournament-report-view", tournament = self.tournament)
                     elif action.upper() == "B":

@@ -15,7 +15,7 @@ class RegisterPlayerCmd(BaseCommand):
         # The command uses the register_player method from the Tournament model
 
         t = Tournament("data/tournaments/in-progress.json")
-        players = t.register_player(self.chess_id, self.tournament, self.club)
+        t.register_player(self.chess_id, self.tournament, self.club)
 
         tm = TournamentManager()
         tournament_details = {}

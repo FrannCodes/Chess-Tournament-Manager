@@ -55,20 +55,24 @@ class TournamentManager:
         rounds = tournament.return_rounds(name)
         player_points = {}
 
-        for i in rounds[0]:
-            for chess_id in i["players"]:
-                player_points[chess_id] = 0
+        if rounds:
+            for i in rounds[0]:
+                for chess_id in i["players"]:
+                    player_points[chess_id] = 0
 
-        for r in rounds:
-            for i in r:
-                if i ["completed"]:
-                    for chess_id in i["players"]:
-                        if i["winner"] == chess_id:
-                            player_points[chess_id] += 1
-                        elif i["winner"] is None:
-                            player_points[chess_id] += 0.5
+            for r in rounds:
+                for i in r:
+                    if i ["completed"]:
+                        for chess_id in i["players"]:
+                            if i["winner"] == chess_id:
+                                player_points[chess_id] += 1
+                            elif i["winner"] is None:
+                                player_points[chess_id] += 0.5
 
-        return player_points
+            return player_points
+
+        else:
+            return player_points
 
     def return_rankings(self, player_points):
         # Returns ranking of players

@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from .tournament_attr import TournamentATTR
 
 class Tournament:
@@ -44,27 +45,29 @@ class Tournament:
                 self.tournaments_list.remove(tournament)
         self.save()
 
-    def register_player (self, player_num, tournament_name, filepath_club):
+    def register_player (self, player_num, tournament_name, club):
         # Registers a player for the tournament using already defined players in a club
-
+        data_folder = "data/clubs"
+        datadir = Path(data_folder)
         player_list = []
 
         try:
             players = []
+            for filepath in datadir.iterdir():
+                if filepath.is_file() and filepath.suffix == ".json":
+                   with open(filepath) as fp:
+                       data = json.load(fp)
+                       if data["name"] == club:
+                           for d in data["players"]:
+                               players.append(d["chess_id"])
 
-            with open(filepath_club) as fp:
-                data = json.load(fp)
+                           if player_num not in players:
+                               raise ValueError("Player not Found")
 
-                for d in data["players"]:
-                    players.append(d["chess_id"])
-
-                if player_num not in players:
-                    raise ValueError("Player not Found")
-
-                for tournament in self.tournaments_list:
-                    if tournament["name"] == tournament_name:
-                        tournament["players"].append(player_num)
-                        player_list = tournament["players"]
+                           for tournament in self.tournaments_list:
+                               if tournament["name"] == tournament_name:
+                                   tournament["players"].append(player_num)
+                                   player_list = tournament["players"]
 
         except FileNotFoundError:
             print ("File not Found")

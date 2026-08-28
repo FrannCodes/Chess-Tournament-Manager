@@ -18,32 +18,40 @@ class TournamentReport(BaseScreen):
         player_report = ReportCmd(self.tournament["name"])
         player_report()
 
-        for player, points in player_report.ranks:
-            print(f"{player} | {points}")
+        if player_report.ranks:
+            for player, points in player_report.ranks:
+                print(f"{player} | {points}")
+        else:
+            print("[No players registered]")
 
         print()
 
         print("ROUNDS")
 
-        for i in range(len(player_report.rounds)):
-            print(f"-- Round {i + 1} --:")
-            for j in range(len(player_report.rounds[i])):
-                print(f"- Match {j + 1} -:")
-                print(f"Player 1 : {player_report.rounds[i][j]["players"][0]}")
-                print(f"Player 2 : {player_report.rounds[i][j]["players"][1]}")
-                if player_report.rounds[i][j]["winner"] is None and player_report.rounds[i][j]["completed"] is True:
-                    print("Winner : TIE!")
-                elif player_report.rounds[i][j]["winner"] is None and player_report.rounds[i][j]["completed"] is False:
-                    print("Winner : Not Decided")
-                else:
-                    print(f"Winner : {player_report.rounds[i][j]["winner"]}!")
+        if player_report.rounds:
+            for i in range(len(player_report.rounds)):
+                print(f"-- Round {i + 1} --:")
+                for j in range(len(player_report.rounds[i])):
+                    print(f"- Match {j + 1} -:")
+                    print(f"Player 1 : {player_report.rounds[i][j]["players"][0]}")
+                    print(f"Player 2 : {player_report.rounds[i][j]["players"][1]}")
 
-                if player_report.rounds[i][j]["completed"] is True:
-                    print("Completed")
-                else:
-                    print("Ongoing")
+                    if player_report.rounds[i][j]["winner"] is None and player_report.rounds[i][j]["completed"] is True:
+                        print("Winner : TIE!")
+                    elif player_report.rounds[i][j]["winner"] is None and player_report.rounds[i][j]["completed"] is False:
+                        print("Winner : Not Decided")
+                    else:
+                        print(f"Winner : {player_report.rounds[i][j]["winner"]}!")
 
-                print()
+                    if player_report.rounds[i][j]["completed"] is True:
+                        print("Completed")
+                    else:
+                        print("Ongoing")
+
+                    print()
+
+        else:
+            print("[No rounds created]")
 
         print()
 
