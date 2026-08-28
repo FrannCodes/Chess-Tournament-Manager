@@ -9,20 +9,23 @@ class Tournament:
         self.filepath_tournament = filepath_tournament
         self.tournaments_list = []
 
-        with open(self.filepath_tournament) as fp:
-            data = json.load(fp)
-            for d in data:
-                self.tournaments_info = {
-                    "name" : d["name"],
-                    "dates": d["dates"],
-                    "venue": d["venue"],
-                    "number_of_rounds": d["number_of_rounds"],
-                    "current_round": d["current_round"],
-                    "completed": d["completed"],
-                    "players": d["players"],
-                    "rounds": d["rounds"]
-                }
-                self.tournaments_list.append(self.tournaments_info)
+        try:
+            with open(self.filepath_tournament) as fp:
+                data = json.load(fp)
+                for d in data:
+                    tournaments_info = {
+                        "name" : d["name"],
+                        "dates": d["dates"],
+                        "venue": d["venue"],
+                        "number_of_rounds": d["number_of_rounds"],
+                        "current_round": d["current_round"],
+                        "completed": d["completed"],
+                        "players": d["players"],
+                        "rounds": d["rounds"]
+                    }
+                    self.tournaments_list.append(tournaments_info)
+        except json.JSONDecodeError:
+            print("File not found")
 
     def save(self):
         # Saves JSON file everytime a change is made
@@ -89,7 +92,7 @@ class Tournament:
                 for match, winner in zip(tournament["rounds"][-1], winners):
                     match["winner"] = winner
 
-                    if match["winner"] not in  match["players"] and match["winner"] is not None:
+                    if match["winner"] not in match["players"] and match["winner"] is not None:
                         raise ValueError("Winner must be one of the players in the match or a tie")
                     else:
                         match ["completed"] = True

@@ -3,14 +3,14 @@ from ..base_screen import BaseScreen
 
 class Advance(BaseScreen):
 
-    display = "## Advance"
+    display = "- Advance -"
 
     def __init__(self, tournament):
         self.tournament = tournament
 
     def get_command(self):
         print("    Are you sure you want to advance?   ")
-        print("****************************************")
+        print("----------------------------------------")
         print("- Press 'N' to return to Tournament View")
         print("- Press 'Y' to advance tournament")
 

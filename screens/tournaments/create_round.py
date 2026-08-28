@@ -1,4 +1,4 @@
-from commands import AdvanceCmd, NoopCmd
+from commands import CreateRoundCmd, NoopCmd
 from ..base_screen import BaseScreen
 
 class CreateRound(BaseScreen):
@@ -11,4 +11,4 @@ class CreateRound(BaseScreen):
         print("Round Created")
         print()
 
-        return AdvanceCmd(self.tournament["name"])
+        return CreateRoundCmd(self.tournament["name"])

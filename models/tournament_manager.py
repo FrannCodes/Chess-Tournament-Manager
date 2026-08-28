@@ -54,12 +54,16 @@ class TournamentManager:
         tournament = Tournament("data/tournaments/in-progress.json")
         rounds = tournament.return_rounds(name)
         player_points = {}
+        players = []
+
+        for t in tournament.tournaments_list:
+            if t["name"] == name:
+                players = t["players"]
+
+        for player in players:
+            player_points[player] = 0
 
         if rounds:
-            for i in rounds[0]:
-                for chess_id in i["players"]:
-                    player_points[chess_id] = 0
-
             for r in rounds:
                 for i in r:
                     if i ["completed"]:
@@ -69,10 +73,7 @@ class TournamentManager:
                             elif i["winner"] is None:
                                 player_points[chess_id] += 0.5
 
-            return player_points
-
-        else:
-            return player_points
+        return player_points
 
     def return_rankings(self, player_points):
         # Returns ranking of players

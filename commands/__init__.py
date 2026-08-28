@@ -9,6 +9,7 @@ from .register_player import RegisterPlayerCmd
 from .report import ReportCmd
 from .results import ResultsCmd
 from .tournament_list import TournamentListCmd
+from .create_round import CreateRoundCmd
 
 __all__ = [
     "ClubCreateCmd",
@@ -21,5 +22,6 @@ __all__ = [
     "RegisterPlayerCmd",
     "ReportCmd",
     "ResultsCmd",
-    "TournamentListCmd"
+    "TournamentListCmd",
+    "CreateRoundCmd"
 ]

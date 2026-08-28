@@ -20,7 +20,7 @@ class EnterResults(BaseScreen):
             winner = 0
 
             while  winner < 1 or winner > 3:
-                winner = self.input_digit(prompt = f"Winner for match {i}")
+                winner = self.input_digit(prompt = f"Winner for match {i}", empty = True)
 
             match winner:
                 case 1: winners.append(match["players"][0])
