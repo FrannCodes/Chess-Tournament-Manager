@@ -1,6 +1,8 @@
 import re
 from abc import ABC, abstractmethod
 from datetime import datetime
+from pathlib import Path
+import json
 
 
 class BaseScreen(ABC):
@@ -34,11 +36,52 @@ class BaseScreen(ABC):
             if empty and value:
                 return value
 
+    def input_digit(self, prompt="", default=None, empty=False):
+        number = None
+        digit = False
+
+        while not digit:
+            number = self.input_string(prompt, default, empty)
+
+            if number.isdigit():
+                digit = True
+
+        return int(number)
+
+    def input_rounds(self, prompt="Enter the number of Rounds", default="1", empty=False):
+        # Method for inputting the number of rounds
+
+        rounds = None
+        digit = False
+
+        while not digit:
+            rounds = self.input_string(prompt, default, empty)
+
+            if rounds.isdigit() and int(rounds) > 0:
+                digit = True
+
+        return int(rounds)
+
     def input_email(self, **kwargs):
         """Utility function to get an email address"""
 
         # https://stackoverflow.com/a/201378
-        mail_rgxp = r"""(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"""
+        mail_rgxp = r"""(?:[a-z0-9!#$%&'*+/=?^_`{|}
+                        ~-]+(?:\.[a-z0-9!#$%&'*+/=?^_
+                        `{|}~-]+)*|"(?:[\x01-\x08\x0b
+                        \x0c\x0e-\x1f\x21\x23-\x5b\x5
+                        d-\x7f]|\\[\x01-\x09\x0b\x0c\
+                        x0e-\x7f])*")@(?:(?:[a-z0-9](
+                        ?:[a-z0-9-]*[a-z0-9])?\.)+[a-
+                        z0-9](?:[a-z0-9-]*[a-z0-9])?|
+                        \[(?:(?:(2(5[0-5]|[0-4][0-9])
+                        |1[0-9][0-9]|[1-9]?[0-9]))\.)
+                        {3}(?:(2(5[0-5]|[0-4][0-9])|1
+                        [0-9][0-9]|[1-9]?[0-9])|[a-z0
+                        -9-]*[a-z0-9]:(?:[\x01-\x08\x
+                        0b\x0c\x0e-\x1f\x21-\x5a\x53-
+                        \x7f]|\\[\x01-\x09\x0b\x0c\x0e
+                        -\x7f])+)\])"""
         message = "Please provide a valid email address!"
         return self.input_regexp(mail_rgxp, message, **kwargs)
 
@@ -57,6 +100,44 @@ class BaseScreen(ABC):
         message = "Please provide a valid Chess ID (XXNNNNN)!"
         return self.input_regexp(chess_rgxp, message, **kwargs)
 
+    def input_club(self, **kwargs):
+        datadir = Path("data/clubs")
+        clubs = []
+        number = []
+
+        for filepath in datadir.iterdir():
+            if filepath.is_file() and filepath.suffix == ".json":
+                with open(filepath) as fp:
+                    data = json.load(fp)
+                    clubs.append(data["name"])
+
+        for count, _ in enumerate(clubs, 1):
+            number.append(count)
+
+        while True:
+            club_name = self.input_digit(prompt="Which club you would like to register a player from", empty=True)
+            if club_name in number:
+                name = clubs[club_name - 1]
+                return name
+
+    def input_player(self, club_name, **kwargs):
+        datadir = Path("data/clubs")
+        players = []
+
+        for filepath in datadir.iterdir():
+            if filepath.is_file() and filepath.suffix == ".json":
+                with open(filepath) as fp:
+                    data = json.load(fp)
+                    if data["name"] == club_name:
+                        for player in data["players"]:
+                            players.append((player["name"], player["chess_id"]))
+
+        while True:
+            name = self.input_string(prompt="Enter player name or chess ID", empty=True)
+            for player, chess_id in players:
+                if name.lower() in player.lower() or name == chess_id:
+                    return chess_id
+
     def input_birthday(self, **kwargs):
         """Utility function to get a date string"""
         while True:
@@ -66,6 +147,22 @@ class BaseScreen(ABC):
                 if dt > datetime.now():
                     raise ValueError
                 return value
+            except ValueError:
+                print("Please provide a valid date (dd-mm-yyyy)!")
+
+    def input_dates(self, empty=True):
+        # Method that returns a dictionary of dates
+
+        dates = {}
+        while True:
+            dates["from"] = self.input_string("From", empty=empty)
+            dates["to"] = self.input_string("To", empty=empty)
+            try:
+                dt_from = datetime.strptime(dates["from"], "%d-%m-%Y")
+                dt_to = datetime.strptime(dates["to"], "%d-%m-%Y")
+                if dt_from > dt_to:
+                    raise ValueError
+                return dates
             except ValueError:
                 print("Please provide a valid date (dd-mm-yyyy)!")
 

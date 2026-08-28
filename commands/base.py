@@ -1,7 +1,5 @@
 from abc import ABCMeta, abstractmethod
 
-from commands.context import Context
-
 
 class BaseCommand(metaclass=ABCMeta):
     """This is the base class for a command"""
