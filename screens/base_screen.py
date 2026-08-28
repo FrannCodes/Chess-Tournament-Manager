@@ -48,7 +48,7 @@ class BaseScreen(ABC):
 
         return int(number)
 
-    def input_rounds(self, prompt="Enter the number of Rounds", default = "1", empty=False):
+    def input_rounds(self, prompt="Enter the number of Rounds", default="1", empty=False):
         # Method for inputting the number of rounds
 
         rounds = None
@@ -66,7 +66,22 @@ class BaseScreen(ABC):
         """Utility function to get an email address"""
 
         # https://stackoverflow.com/a/201378
-        mail_rgxp = r"""(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])"""
+        mail_rgxp = r"""(?:[a-z0-9!#$%&'*+/=?^_`{|}
+                        ~-]+(?:\.[a-z0-9!#$%&'*+/=?^_
+                        `{|}~-]+)*|"(?:[\x01-\x08\x0b
+                        \x0c\x0e-\x1f\x21\x23-\x5b\x5
+                        d-\x7f]|\\[\x01-\x09\x0b\x0c\
+                        x0e-\x7f])*")@(?:(?:[a-z0-9](
+                        ?:[a-z0-9-]*[a-z0-9])?\.)+[a-
+                        z0-9](?:[a-z0-9-]*[a-z0-9])?|
+                        \[(?:(?:(2(5[0-5]|[0-4][0-9])
+                        |1[0-9][0-9]|[1-9]?[0-9]))\.)
+                        {3}(?:(2(5[0-5]|[0-4][0-9])|1
+                        [0-9][0-9]|[1-9]?[0-9])|[a-z0
+                        -9-]*[a-z0-9]:(?:[\x01-\x08\x
+                        0b\x0c\x0e-\x1f\x21-\x5a\x53-
+                        \x7f]|\\[\x01-\x09\x0b\x0c\x0e
+                        -\x7f])+)\])"""
         message = "Please provide a valid email address!"
         return self.input_regexp(mail_rgxp, message, **kwargs)
 
@@ -100,12 +115,10 @@ class BaseScreen(ABC):
             number.append(count)
 
         while True:
-            club_name = self.input_digit(prompt = "Which club you would like to register a player from", empty=True)
+            club_name = self.input_digit(prompt="Which club you would like to register a player from", empty=True)
             if club_name in number:
                 name = clubs[club_name - 1]
                 return name
-
-
 
     def input_player(self, club_name, **kwargs):
         datadir = Path("data/clubs")
@@ -120,7 +133,7 @@ class BaseScreen(ABC):
                             players.append((player["name"], player["chess_id"]))
 
         while True:
-            name = self.input_string(prompt = "Enter player name or chess ID", empty=True)
+            name = self.input_string(prompt="Enter player name or chess ID", empty=True)
             for player, chess_id in players:
                 if name.lower() in player.lower() or name == chess_id:
                     return chess_id
@@ -137,13 +150,13 @@ class BaseScreen(ABC):
             except ValueError:
                 print("Please provide a valid date (dd-mm-yyyy)!")
 
-    def input_dates(self, empty = True):
+    def input_dates(self, empty=True):
         # Method that returns a dictionary of dates
 
         dates = {}
         while True:
-            dates["from"] = self.input_string("From", empty = empty)
-            dates["to"] = self.input_string("To", empty = empty)
+            dates["from"] = self.input_string("From", empty=empty)
+            dates["to"] = self.input_string("To", empty=empty)
             try:
                 dt_from = datetime.strptime(dates["from"], "%d-%m-%Y")
                 dt_to = datetime.strptime(dates["to"], "%d-%m-%Y")
@@ -152,7 +165,6 @@ class BaseScreen(ABC):
                 return dates
             except ValueError:
                 print("Please provide a valid date (dd-mm-yyyy)!")
-
 
     def run(self):
         """Main method to 'run' the screen - displays a message and gets a command"""
@@ -166,4 +178,3 @@ class BaseScreen(ABC):
 
         print("")
         return self.get_command()
-

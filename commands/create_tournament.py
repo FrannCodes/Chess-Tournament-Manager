@@ -2,6 +2,7 @@ from commands.context import Context
 from models import Tournament, TournamentManager
 from .base import BaseCommand
 
+
 class CreateTournamentCmd(BaseCommand):
     # Command to create a tournament
     def __init__(self, **kwargs):
@@ -20,4 +21,4 @@ class CreateTournamentCmd(BaseCommand):
             if t["name"] == name:
                 tournament_details = t
 
-        return Context("tournament-view", tournament = tournament_details)
+        return Context("tournament-view", tournament=tournament_details)

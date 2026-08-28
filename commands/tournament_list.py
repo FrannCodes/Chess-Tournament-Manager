@@ -2,6 +2,7 @@ from commands.context import Context
 from models import TournamentManager
 from .base import BaseCommand
 
+
 class TournamentListCmd(BaseCommand):
     # Command to create a tournament
 
@@ -10,4 +11,4 @@ class TournamentListCmd(BaseCommand):
 
         tm = TournamentManager()
 
-        return Context("main-menu", tournaments = tm.tournaments)
+        return Context("main-menu", tournaments=tm.tournaments)

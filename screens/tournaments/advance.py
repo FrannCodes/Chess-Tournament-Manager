@@ -1,6 +1,7 @@
 from commands import AdvanceCmd, NoopCmd
 from ..base_screen import BaseScreen
 
+
 class Advance(BaseScreen):
 
     display = "- Advance -"
@@ -22,4 +23,4 @@ class Advance(BaseScreen):
         if choice == "Y":
             return AdvanceCmd(self.tournament["name"])
         else:
-            return NoopCmd("tournament-view", tournament = self.tournament)
+            return NoopCmd("tournament-view", tournament=self.tournament)

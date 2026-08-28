@@ -25,4 +25,4 @@ class ReportCmd(BaseCommand):
             if t["name"] == self.tournament:
                 tournament_details = t
 
-        return Context("report-view", tournament = tournament_details)
+        return Context("report-view", tournament=tournament_details)

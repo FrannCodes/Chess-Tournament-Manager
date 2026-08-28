@@ -8,6 +8,7 @@ class ClubListCmd(BaseCommand):
     """Command to get the list of clubs"""
     def __init__(self):
         self.clubs = []
+
     def execute(self):
         cm = ClubManager()
         self.clubs = cm.clubs

@@ -2,6 +2,7 @@ from commands.context import Context
 from .base import BaseCommand
 from models import Tournament, TournamentManager
 
+
 class AdvanceCmd(BaseCommand):
     # Command to advance a round
 
@@ -25,4 +26,4 @@ class AdvanceCmd(BaseCommand):
             if t["name"] == self.tournament:
                 tournament_details = t
 
-        return Context("tournament-view", tournament = tournament_details)
+        return Context("tournament-view", tournament=tournament_details)

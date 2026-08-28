@@ -1,13 +1,14 @@
 from datetime import datetime
 
+
 class TournamentATTR:
     # A class that contains all tournament information
     # each tournament creates a TournamentATTR object
 
     DATE_FORMAT = "%d-%m-%Y"
 
-    def __init__(self, name, dates, venue, number_of_rounds = 1,
-                 current_round = 1, completed = False, players = None, rounds = None):
+    def __init__(self, name, dates, venue, number_of_rounds=1,
+                 current_round=1, completed=False, players=None, rounds=None):
 
         self.name = name
         self.dates = dates
@@ -72,7 +73,7 @@ class TournamentATTR:
         except ValueError as e:
             print(e)
 
-    def return_attributes (self):
+    def return_attributes(self):
         attributes = {"name": self.name, "dates": self.dates, "venue": self.venue,
                       "number_of_rounds": self.number_of_rounds, "current_round": self.current_round,
                       "completed": self.completed, "players": self.players, "rounds": self.rounds}

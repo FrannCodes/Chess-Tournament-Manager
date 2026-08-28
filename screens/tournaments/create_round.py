@@ -1,5 +1,6 @@
-from commands import CreateRoundCmd, NoopCmd
+from commands import CreateRoundCmd
 from ..base_screen import BaseScreen
+
 
 class CreateRound(BaseScreen):
 

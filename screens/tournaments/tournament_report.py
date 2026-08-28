@@ -1,6 +1,6 @@
 from commands import ReportCmd, NoopCmd
-from models import TournamentManager
 from ..base_screen import BaseScreen
+
 
 class TournamentReport(BaseScreen):
 
@@ -36,9 +36,11 @@ class TournamentReport(BaseScreen):
                     print(f"Player 1 : {player_report.rounds[i][j]["players"][0]}")
                     print(f"Player 2 : {player_report.rounds[i][j]["players"][1]}")
 
-                    if player_report.rounds[i][j]["winner"] is None and player_report.rounds[i][j]["completed"] is True:
+                    if (player_report.rounds[i][j]["winner"] is None
+                            and player_report.rounds[i][j]["completed"] is True):
                         print("Winner : TIE!")
-                    elif player_report.rounds[i][j]["winner"] is None and player_report.rounds[i][j]["completed"] is False:
+                    elif (player_report.rounds[i][j]["winner"] is None
+                          and player_report.rounds[i][j]["completed"] is False):
                         print("Winner : Not Decided")
                     else:
                         print(f"Winner : {player_report.rounds[i][j]["winner"]}!")
@@ -58,4 +60,4 @@ class TournamentReport(BaseScreen):
         while True:
             button = self.input_string("Press 'B' to return to Tournament View").upper()
             if button == "B":
-                return NoopCmd("tournament-view", tournament = self.tournament)
+                return NoopCmd("tournament-view", tournament=self.tournament)

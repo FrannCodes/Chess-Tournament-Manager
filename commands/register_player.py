@@ -6,7 +6,7 @@ from models import Tournament, TournamentManager
 class RegisterPlayerCmd(BaseCommand):
     # Command to register a player
 
-    def __init__(self,chess_id, tournament, club):
+    def __init__(self, chess_id, tournament, club):
         self.club = club
         self.chess_id = chess_id
         self.tournament = tournament
@@ -23,4 +23,4 @@ class RegisterPlayerCmd(BaseCommand):
             if t["name"] == self.tournament:
                 tournament_details = t
 
-        return Context("tournament-view", tournament = tournament_details)
+        return Context("tournament-view", tournament=tournament_details)

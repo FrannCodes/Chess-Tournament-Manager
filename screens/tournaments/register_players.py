@@ -1,6 +1,7 @@
 from commands import RegisterPlayerCmd, ClubListCmd
 from ..base_screen import BaseScreen
 
+
 class RegisterPlayers(BaseScreen):
     display = "- Register Player -"
 

@@ -28,8 +28,6 @@ class TournamentView(BaseScreen):
             for player in self.tournament["players"]:
                 print(player)
 
-
-
     def get_command(self):
 
         while True:
@@ -41,7 +39,7 @@ class TournamentView(BaseScreen):
 
                 action = self.input_string()
                 if action.upper() == "V":
-                    return NoopCmd("tournament-report-view", tournament = self.tournament)
+                    return NoopCmd("tournament-report-view", tournament=self.tournament)
                 elif action.upper() == "B":
                     return TournamentListCmd()
             else:
@@ -54,9 +52,9 @@ class TournamentView(BaseScreen):
 
                     action = self.input_string()
                     if action.upper() == "P":
-                        return NoopCmd("register-player-view", tournament = self.tournament)
+                        return NoopCmd("register-player-view", tournament=self.tournament)
                     elif action.upper() == "V":
-                        return NoopCmd("tournament-report-view", tournament = self.tournament)
+                        return NoopCmd("tournament-report-view", tournament=self.tournament)
                     elif action.upper() == "B":
                         return TournamentListCmd()
 
@@ -70,11 +68,11 @@ class TournamentView(BaseScreen):
 
                     action = self.input_string()
                     if action.upper() == "P":
-                        return NoopCmd("register-player-view", tournament = self.tournament)
+                        return NoopCmd("register-player-view", tournament=self.tournament)
                     elif action.upper() == "C":
-                        return NoopCmd("create-round-view", tournament = self.tournament)
+                        return NoopCmd("create-round-view", tournament=self.tournament)
                     elif action.upper() == "V":
-                        return NoopCmd("tournament-report-view", tournament = self.tournament)
+                        return NoopCmd("tournament-report-view", tournament=self.tournament)
                     elif action.upper() == "B":
                         return TournamentListCmd()
 
@@ -89,12 +87,12 @@ class TournamentView(BaseScreen):
 
                     action = self.input_string()
                     if action.upper() == "P":
-                        return NoopCmd("register-player-view", tournament = self.tournament)
+                        return NoopCmd("register-player-view", tournament=self.tournament)
                     elif action.upper() == "R":
-                        return NoopCmd("results-view", tournament = self.tournament)
+                        return NoopCmd("results-view", tournament=self.tournament)
                     elif action.upper() == "A":
-                        return NoopCmd("advance-view", tournament = self.tournament)
+                        return NoopCmd("advance-view", tournament=self.tournament)
                     elif action.upper() == "V":
-                        return NoopCmd("tournament-report-view", tournament = self.tournament)
+                        return NoopCmd("tournament-report-view", tournament=self.tournament)
                     elif action.upper() == "B":
                         return TournamentListCmd()

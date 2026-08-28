@@ -1,13 +1,15 @@
 from commands import TournamentListCmd
-from screens.main_menu_tournaments import MainMenu
-from screens.tournaments import Advance, CreateRound, EnterResults, RegisterPlayers, TournamentReport, TournamentView, TournamentCreate
+from screens.main_menu_tournaments import MainMenuTournament
+from screens.tournaments import (Advance, CreateRound, EnterResults,
+                                 RegisterPlayers, TournamentReport,
+                                 TournamentView, TournamentCreate)
 
 
 class TournamentApp:
     """The main controller for the club management program"""
 
     SCREENS = {
-        "main-menu": MainMenu,
+        "main-menu": MainMenuTournament,
         "create-tournament": TournamentCreate,
         "tournament-view": TournamentView,
         "register-player-view": RegisterPlayers,
@@ -35,6 +37,7 @@ class TournamentApp:
                 # Ctrl-C
                 print("Bye!")
                 self.context.run = False
+
 
 if __name__ == "__main__":
     app = TournamentApp()

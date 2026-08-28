@@ -2,6 +2,7 @@ from commands.context import Context
 from .base import BaseCommand
 from models import TournamentManager
 
+
 class CreateRoundCmd(BaseCommand):
     # Command to create a round
 
@@ -19,4 +20,4 @@ class CreateRoundCmd(BaseCommand):
             if t["name"] == self.tournament:
                 tournament_details = t
 
-        return Context("tournament-view", tournament = tournament_details)
+        return Context("tournament-view", tournament=tournament_details)

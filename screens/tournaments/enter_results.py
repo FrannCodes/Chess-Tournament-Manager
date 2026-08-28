@@ -1,6 +1,7 @@
 from commands.results import ResultsCmd
 from ..base_screen import BaseScreen
 
+
 class EnterResults(BaseScreen):
 
     display = "- Enter Results -"
@@ -19,12 +20,12 @@ class EnterResults(BaseScreen):
 
             winner = 0
 
-            while  winner < 1 or winner > 3:
-                winner = self.input_digit(prompt = f"Winner for match {i}", empty = True)
+            while winner < 1 or winner > 3:
+                winner = self.input_digit(prompt=f"Winner for match {i}", empty=True)
 
             match winner:
                 case 1: winners.append(match["players"][0])
                 case 2: winners.append(match["players"][1])
                 case 3: winners.append(None)
 
-        return ResultsCmd(tournament = self.tournament["name"], winners = winners)
+        return ResultsCmd(tournament=self.tournament["name"], winners=winners)

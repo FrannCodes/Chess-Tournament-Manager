@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from .tournament_attr import TournamentATTR
 
+
 class Tournament:
     def __init__(self, filepath_tournament):
         # An instance of Tournament class will create a list of tournaments which each of them are dictionaries
@@ -14,7 +15,7 @@ class Tournament:
                 data = json.load(fp)
                 for d in data:
                     tournaments_info = {
-                        "name" : d["name"],
+                        "name": d["name"],
                         "dates": d["dates"],
                         "venue": d["venue"],
                         "number_of_rounds": d["number_of_rounds"],
@@ -36,7 +37,7 @@ class Tournament:
     def create_tournament(self, name, **kwargs):
         # Creates a new tournament
 
-        tournament = TournamentATTR(name = name, **kwargs)
+        tournament = TournamentATTR(name=name, **kwargs)
         self.tournaments_list.append(tournament.return_attributes())
         self.save()
 
@@ -48,7 +49,7 @@ class Tournament:
                 self.tournaments_list.remove(tournament)
         self.save()
 
-    def register_player (self, player_num, tournament_name, club):
+    def register_player(self, player_num, tournament_name, club):
         # Registers a player for the tournament using already defined players in a club
         data_folder = "data/clubs"
         datadir = Path(data_folder)
@@ -58,22 +59,22 @@ class Tournament:
             players = []
             for filepath in datadir.iterdir():
                 if filepath.is_file() and filepath.suffix == ".json":
-                   with open(filepath) as fp:
-                       data = json.load(fp)
-                       if data["name"] == club:
-                           for d in data["players"]:
-                               players.append(d["chess_id"])
+                    with open(filepath) as fp:
+                        data = json.load(fp)
+                        if data["name"] == club:
+                            for d in data["players"]:
+                                players.append(d["chess_id"])
 
-                           if player_num not in players:
-                               raise ValueError("Player not Found")
+                            if player_num not in players:
+                                raise ValueError("Player not Found")
 
-                           for tournament in self.tournaments_list:
-                               if tournament["name"] == tournament_name:
-                                   tournament["players"].append(player_num)
-                                   player_list = tournament["players"]
+                            for tournament in self.tournaments_list:
+                                if tournament["name"] == tournament_name:
+                                    tournament["players"].append(player_num)
+                                    player_list = tournament["players"]
 
         except FileNotFoundError:
-            print ("File not Found")
+            print("File not Found")
 
         except ValueError as e:
             print(e)
@@ -82,7 +83,7 @@ class Tournament:
 
         return player_list
 
-    def results (self, tournament_name, winners):
+    def results(self, tournament_name, winners):
         # Submits the results of the tournament
 
         results = []
@@ -105,12 +106,11 @@ class Tournament:
 
         return results
 
-    def advance (self, tournament_name):
+    def advance(self, tournament_name):
         # Advances tournament to the next round
 
         number_of_rounds = 1
         current_round = 1
-
 
         for tournament in self.tournaments_list:
             if tournament["name"] == tournament_name:
@@ -128,7 +128,7 @@ class Tournament:
         self.save()
         return current_round, number_of_rounds
 
-    def report (self, tournament_name):
+    def report(self, tournament_name):
         # Returns report of the tournament
 
         report = {}

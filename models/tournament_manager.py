@@ -4,8 +4,9 @@ from pathlib import Path
 from .tournament import Tournament
 from datetime import datetime
 
+
 class TournamentManager:
-    def __init__(self, data_folder = "data/tournaments"):
+    def __init__(self, data_folder="data/tournaments"):
         datadir = Path(data_folder)
         self.data_folder = datadir
         self.tournaments = []
@@ -29,11 +30,12 @@ class TournamentManager:
                     print(filepath, "is an invalid JSON file.")
 
         self.tournaments.sort(
-            key = lambda x: datetime.strptime(x["dates"]["from"], "%d-%m-%Y")
+            key=lambda x: datetime.strptime(x["dates"]["from"], "%d-%m-%Y")
         )
 
     def completed(self, name):
-        #Moves completed tournaments from "in-progress.json" to "completed.json" file when marked as completed
+        """Moves completed tournaments from "in-progress.json"
+        to "completed.json" file when marked as completed"""
 
         for t in self.tournaments:
             if t["name"] == name:
@@ -43,10 +45,10 @@ class TournamentManager:
                 for i in in_progress.tournaments_list:
                     if i["name"] == name:
                         in_progress.remove_tournament(name)
-                        completed.create_tournament(name, dates = i["dates"], venue = i["venue"],
-                                                    number_of_rounds = i["number_of_rounds"],
-                                                    current_round = None, completed = True,
-                                                    players = i["players"], rounds = i["rounds"])
+                        completed.create_tournament(name, dates=i["dates"], venue=i["venue"],
+                                                    number_of_rounds=i["number_of_rounds"],
+                                                    current_round=None, completed=True,
+                                                    players=i["players"], rounds=i["rounds"])
 
         self.refresh()
 
@@ -66,7 +68,7 @@ class TournamentManager:
         if rounds:
             for r in rounds:
                 for i in r:
-                    if i ["completed"]:
+                    if i["completed"]:
                         for chess_id in i["players"]:
                             if i["winner"] == chess_id:
                                 player_points[chess_id] += 1
@@ -82,7 +84,6 @@ class TournamentManager:
         ranking.sort(key=lambda x: x[1], reverse=True)
 
         return ranking
-
 
     def matchmaking(self, name):
         # Matches players
