@@ -54,23 +54,6 @@ class TournamentManager:
 
     def get_scores(self, name):
 
-        for filepath in self.data_folder.iterdir():
-            if filepath.is_file() and filepath.suffix == ".json":
-                try:
-                    with open(filepath) as fp:
-                        data = json.load(fp)
-
-                        for d in data:
-                            if d["name"] == name:
-                                if d["completed"]:
-                                    tournament = Tournament("data/tournaments/completed.json")
-
-                                else:
-                                    tournament = Tournament("data/tournaments/in-progress.json")
-
-                except json.JSONDecodeError:
-                    print("File not found")
-
         rounds = self.return_rounds(name)
         player_points = {}
         players = self.return_players(name)
