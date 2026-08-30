@@ -1,6 +1,6 @@
 from commands.context import Context
 from .base import BaseCommand
-from models import Tournament, TournamentManager
+from models import TournamentManager
 
 
 class ReportCmd(BaseCommand):
@@ -14,11 +14,10 @@ class ReportCmd(BaseCommand):
     def execute(self):
         # The command uses the report method from the Tournament model
 
-        t = Tournament("data/tournaments/in-progress.json")
         tm = TournamentManager()
         player_points = tm.get_scores(self.tournament)
         self.ranks = tm.return_rankings(player_points)
-        self.rounds = t.return_rounds(self.tournament)
+        self.rounds = tm.return_rounds(self.tournament)
 
         tournament_details = {}
         for t in tm.tournaments:

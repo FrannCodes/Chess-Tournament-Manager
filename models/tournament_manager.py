@@ -53,14 +53,27 @@ class TournamentManager:
         self.refresh()
 
     def get_scores(self, name):
-        tournament = Tournament("data/tournaments/in-progress.json")
-        rounds = tournament.return_rounds(name)
-        player_points = {}
-        players = []
 
-        for t in tournament.tournaments_list:
-            if t["name"] == name:
-                players = t["players"]
+        for filepath in self.data_folder.iterdir():
+            if filepath.is_file() and filepath.suffix == ".json":
+                try:
+                    with open(filepath) as fp:
+                        data = json.load(fp)
+
+                        for d in data:
+                            if d["name"] == name:
+                                if d["completed"]:
+                                    tournament = Tournament("data/tournaments/completed.json")
+
+                                else:
+                                    tournament = Tournament("data/tournaments/in-progress.json")
+
+                except json.JSONDecodeError:
+                    print("File not found")
+
+        rounds = self.return_rounds(name)
+        player_points = {}
+        players = self.return_players(name)
 
         for player in players:
             player_points[player] = 0
@@ -85,12 +98,68 @@ class TournamentManager:
 
         return ranking
 
+    def return_rounds(self, name):
+        # Returns the rounds
+
+        rounds = []
+
+        for filepath in self.data_folder.iterdir():
+            if filepath.is_file() and filepath.suffix == ".json":
+                try:
+                    with open(filepath) as fp:
+                        data = json.load(fp)
+
+                        for d in data:
+                            if d["name"] == name:
+                                if d["completed"]:
+                                    tournament = Tournament("data/tournaments/completed.json")
+
+                                else:
+                                    tournament = Tournament("data/tournaments/in-progress.json")
+
+                except json.JSONDecodeError:
+                    print("File not found")
+
+        for t in tournament.tournaments_list:
+            if t["name"] == name:
+                rounds = t["rounds"]
+
+        return rounds
+
+    def return_players(self, name):
+        # Returns the players in a round
+
+        players = []
+
+        for filepath in self.data_folder.iterdir():
+            if filepath.is_file() and filepath.suffix == ".json":
+                try:
+                    with open(filepath) as fp:
+                        data = json.load(fp)
+
+                        for d in data:
+                            if d["name"] == name:
+                                if d["completed"]:
+                                    tournament = Tournament("data/tournaments/completed.json")
+
+                                else:
+                                    tournament = Tournament("data/tournaments/in-progress.json")
+
+                except json.JSONDecodeError:
+                    print("File not found")
+
+        for t in tournament.tournaments_list:
+            if t["name"] == name:
+                players = t["players"]
+
+        return players
+
     def matchmaking(self, name):
         # Matches players
 
         tournament = Tournament("data/tournaments/in-progress.json")
-        rounds = tournament.return_rounds(name)
-        players = tournament.return_players(name)
+        rounds = self.return_rounds(name)
+        players = self.return_players(name)
         matches = []
         group1 = []
         group2 = []
