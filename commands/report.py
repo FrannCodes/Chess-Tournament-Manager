@@ -16,7 +16,8 @@ class ReportCmd(BaseCommand):
 
         tm = TournamentManager()
         player_points = tm.get_scores(self.tournament)
-        self.ranks = tm.return_rankings(player_points)
+        rankings = tm.return_rankings(player_points)
+        self.ranks = tm.ranking_players(rankings)
         self.rounds = tm.return_rounds(self.tournament)
 
         tournament_details = {}

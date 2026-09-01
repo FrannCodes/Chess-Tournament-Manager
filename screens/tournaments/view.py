@@ -1,3 +1,5 @@
+import json
+from pathlib import Path
 from commands import TournamentListCmd, NoopCmd
 from ..base_screen import BaseScreen
 
@@ -25,8 +27,25 @@ class TournamentView(BaseScreen):
         if not self.tournament["players"]:
             print("[No Players Registered]")
         else:
-            for player in self.tournament["players"]:
-                print(player)
+            data_folder = Path("data/clubs")
+            players = []
+
+            for chess_id in self.tournament["players"]:
+                for filepath in data_folder.iterdir():
+                    if filepath.is_file() and filepath.suffix == ".json":
+                        try:
+                            with open(filepath) as fp:
+                                data = json.load(fp)
+
+                                for player in data["players"]:
+                                    if player["chess_id"] == chess_id:
+                                        players.append((player["name"], player["chess_id"]))
+
+                        except json.JSONDecodeError:
+                            print("Invalid File")
+
+            for player in players:
+                print(f"{player[0]} ({player[1]})")
 
     def get_command(self):
 

@@ -25,7 +25,7 @@ class ClubView(BaseScreen):
                 return ClubListCmd()
             elif value.upper() == "C":
                 return NoopCmd("player-create", club=self.club)
-            elif value.isdigit():
+            elif value.isdigit() and int(value) in range(1, len(self.club.players) + 1):
                 value = int(value)
                 return NoopCmd(
                     "player-view", club=self.club, player=self.club.players[value - 1]

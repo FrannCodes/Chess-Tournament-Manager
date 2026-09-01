@@ -109,6 +109,26 @@ class TournamentManager:
 
         return rounds
 
+    def ranking_players(self, rankings):
+        data_folder = Path("data/clubs")
+        ranking_players = []
+
+        for player, points in rankings:
+            for filepath in data_folder.iterdir():
+                if filepath.is_file() and filepath.suffix == ".json":
+                    try:
+                        with open(filepath) as fp:
+                            data = json.load(fp)
+
+                            for d in data["players"]:
+                                if d["chess_id"] == player:
+                                    ranking_players.append(((d["name"], d["chess_id"]), points))
+
+                    except json.JSONDecodeError:
+                        print("Invalid File")
+
+        return ranking_players
+
     def return_players(self, name):
         # Returns the players in a round
 
@@ -193,13 +213,17 @@ class TournamentManager:
             ranking = self.return_rankings(player_points_updated)
 
             # Pairs the players based on ranking
-            for i in range(0, len(ranking), 2):
-                players = [ranking[i][0], ranking[i+1][0]]
-                pairs = {"players": players,
-                         "completed": False,
-                         "winner": None}
+            try:
+                for i in range(0, len(ranking), 2):
+                    players = [ranking[i][0], ranking[i+1][0]]
+                    pairs = {"players": players,
+                             "completed": False,
+                             "winner": None}
 
-                matches.append(pairs)
+                    matches.append(pairs)
+
+            except ValueError:
+                print("There is an odd amount of players in your tournament (Might be due to a duplicated member)")
 
             tournament.add_round(name, matches)
 
