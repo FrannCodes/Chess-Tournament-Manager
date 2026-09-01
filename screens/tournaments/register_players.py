@@ -26,6 +26,10 @@ class RegisterPlayers(BaseScreen):
                 for player in c.players:
                     print(f"{player.name}, {player.chess_id}")
 
-        player = self.input_player(club)
+        while True:
+            player = self.input_player(club)
 
-        return RegisterPlayerCmd(player, self.tournament["name"], club)
+            if player in self.tournament["players"]:
+                print("Player already in tournament")
+            else:
+                return RegisterPlayerCmd(player, self.tournament["name"], club)

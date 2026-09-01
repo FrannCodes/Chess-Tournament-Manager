@@ -128,37 +128,6 @@ class Tournament:
         self.save()
         return current_round, number_of_rounds
 
-    def report(self, tournament_name):
-        # Returns report of the tournament
-
-        report = {}
-        for tournament in self.tournaments_list:
-            if tournament["name"] == tournament_name:
-                report = tournament
-        return report
-
-    def return_rounds(self, tournament_name):
-        # Returns the rounds
-
-        rounds = []
-
-        for tournament in self.tournaments_list:
-            if tournament["name"] == tournament_name:
-                rounds = tournament["rounds"]
-
-        return rounds
-
-    def return_players(self, tournament_name):
-        # Returns the players in a round
-
-        players = []
-
-        for tournament in self.tournaments_list:
-            if tournament["name"] == tournament_name:
-                players = tournament["players"]
-
-        return players
-
     def add_round(self, tournament_name, matches):
         # Adds a round
 

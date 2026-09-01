@@ -120,6 +120,48 @@
             "email": "ijohnston@example.org",
             "chess_id": "LS93715",
             "birthday": "03-06-1973"
+        },
+        {
+            "name": "Marcus Bennett",
+            "email": "marcusbennett42@example.com",
+            "chess_id": "RY03677",
+            "birthday": "14-02-1988"
+        },
+        {
+            "name": "Olivia Crawford",
+            "email": "oliviacrawford17@example.org",
+            "chess_id": "RI14529",
+            "birthday": "09-07-1995"
+        },
+        {
+            "name": "Ethan Reynolds",
+            "email": "ethanreynolds63@example.net",
+            "chess_id": "AV07547",
+            "birthday": "26-11-1981"
+        },
+        {
+            "name": "Natalie Brooks",
+            "email": "nataliebrooks28@example.com",
+            "chess_id": "OU52460",
+            "birthday": "18-04-1999"
+        },
+        {
+            "name": "Caleb Simmons",
+            "email": "calebsimmons51@example.org",
+            "chess_id": "LU33889",
+            "birthday": "07-12-1979"
+        },
+        {
+            "name": "Vanessa Harper",
+            "email": "vanessaharper36@example.net",
+            "chess_id": "YJ29085",
+            "birthday": "31-01-1992"
+        },
+        {
+            "name": "Derek Coleman",
+            "email": "derekcoleman84@example.com",
+            "chess_id": "OH36083",
+            "birthday": "22-06-1985"
         }
     ]
 }

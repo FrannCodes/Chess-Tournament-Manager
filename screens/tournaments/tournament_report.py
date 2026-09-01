@@ -20,7 +20,7 @@ class TournamentReport(BaseScreen):
 
         if player_report.ranks:
             for player, points in player_report.ranks:
-                print(f"{player} | {points}")
+                print(f"{player[0]} ({player[1]}) : {points}")
         else:
             print("[No players registered]")
 
